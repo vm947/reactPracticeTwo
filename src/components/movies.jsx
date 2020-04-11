@@ -5,7 +5,7 @@ import { getGenres } from "../services/fakeGenreService";
 import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
-import _ from 'lodash';
+import _ from "lodash";
 
 class Movies extends Component {
   state = {
@@ -13,11 +13,11 @@ class Movies extends Component {
     genres: [],
     currentPage: 1,
     pageSize: 4,
-    sortColumn: {path: 'title', order: 'asc'}
+    sortColumn: { path: "title", order: "asc" },
   };
 
   componentDidMount() {
-    const genres = [{ _id: '',  name: "All Genres" }, ...getGenres()];
+    const genres = [{ _id: "", name: "All Genres" }, ...getGenres()];
 
     this.setState({ movies: getMovies(), genres });
   }
@@ -45,8 +45,8 @@ class Movies extends Component {
     console.log(genre);
   };
 
-  handleSort = sortColumn => {
-    this.setState({sortColumn})
+  handleSort = (sortColumn) => {
+    this.setState({ sortColumn });
   };
 
   render() {
@@ -66,35 +66,31 @@ class Movies extends Component {
         ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
         : allMovies;
 
-   const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order] )  
-          //_.orderBy(users, ['user', 'age'], ['asc', 'desc']);
-          // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 40]]  
+    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+    //_.orderBy(users, ['user', 'age'], ['asc', 'desc']);
+    // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 40]]
 
     const movies = paginate(sorted, currentPage, pageSize);
 
     return (
       <div className="row">
         <div className="col-3">
-
           <ListGroup
             items={this.state.genres}
             selectedItem={this.state.selectedGenre}
             onItemSelect={this.HandleGenreSelect}
           />
-
         </div>
 
         <div className="col">
-
           <p>Showing {filtered.length} movies in the database</p>
 
           <MoviesTable
             movies={movies}
-            sortColumn = {sortColumn}
+            sortColumn={sortColumn}
             onLike={this.handleLike}
             onDelete={this.handleDelete}
-            onSort = {this.handleSort}
-
+            onSort={this.handleSort}
           />
 
           <Pagination
@@ -103,7 +99,6 @@ class Movies extends Component {
             currentPage={currentPage}
             onPageChange={this.HandlePageChange}
           />
-
         </div>
       </div>
     );
