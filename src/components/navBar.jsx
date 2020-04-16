@@ -20,6 +20,9 @@ const NavBar = (props) => {
       <NavLink className="nav-link" to="/rentals" tabindex="-1" aria-disabled="true">
         Rentals
       </NavLink>
+      <NavLink className="nav-link" to="/login" tabindex="-1" aria-disabled="true">
+        Login
+      </NavLink>
     </nav>
   );
 };
