@@ -17,10 +17,10 @@ const NavBar = (props) => {
       <NavLink className="nav-link" to="/customers">
         Customers
       </NavLink>
-      <NavLink className="nav-link" to="/rentals" tabindex="-1" aria-disabled="true">
+      <NavLink className="nav-link" to="/rentals">
         Rentals
       </NavLink>
-      <NavLink className="nav-link" to="/login" tabindex="-1" aria-disabled="true">
+      <NavLink className="nav-link" to="/login">
         Login
       </NavLink>
     </nav>

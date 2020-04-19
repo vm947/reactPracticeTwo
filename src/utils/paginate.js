@@ -1,5 +1,5 @@
 import _ from "lodash";
-import Movies from "../components/movies";
+
 
 export function paginate(items, pageNumber, pageSize) {
   const startIndex = (pageNumber - 1) * pageSize;
