@@ -23,6 +23,9 @@ const NavBar = (props) => {
       <NavLink className="nav-link" to="/login">
         Login
       </NavLink>
+      <NavLink className="nav-link" to="/registration">
+        Registration
+      </NavLink>
     </nav>
   );
 };

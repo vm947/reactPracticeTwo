@@ -6,7 +6,8 @@ import NavBar from "./components/navBar";
 import Customers from "./components/common/customers";
 import Rentals from "./components/common/rentals";
 import NotFound from "./components/common/notFound";
-import LoginForm from './components/loginForm';
+import LoginForm from "./components/loginForm";
+import RegisterForm from "./components/common/registrationForm";
 import "./App.css";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/movies" component={Movies} />
           <Route path="/customers" component={Customers} />
           <Route path="/rentals" component={Rentals} />
+          <Route path="/registration" component={RegisterForm} />
           <Route path="/not-found" component={NotFound} />
           <Redirect from="/" exact to="/movies" />
           <Redirect to="/not-found" />

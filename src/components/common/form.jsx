@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./input";
+import Select from "./select";
 
 class Form extends Component {
-  state = {
-    data: {},
-    errors: {},
-  };
+  // state = {
+  //   data: {},
+  //   errors: {}
+  // };
 
   validate = () => {
     const options = { abortEarly: false };
@@ -25,7 +26,7 @@ class Form extends Component {
     return error ? error.details[0].message : null;
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
 
     const errors = this.validate();
@@ -38,13 +39,12 @@ class Form extends Component {
   handleChange = ({ currentTarget: input }) => {
     const errors = { ...this.state.errors };
     const errorMessage = this.validateProperty(input);
-
     if (errorMessage) errors[input.name] = errorMessage;
     else delete errors[input.name];
 
-    //{currentTarget: input} === e.currentTarget
     const data = { ...this.state.data };
     data[input.name] = input.value;
+
     this.setState({ data, errors });
   };
 
@@ -56,8 +56,24 @@ class Form extends Component {
     );
   }
 
+  renderSelect(name, label, options) {
+    const { data, errors } = this.state;
+
+    return (
+      <Select
+        name={name}
+        value={data[name]}
+        label={label}
+        options={options}
+        onChange={this.handleChange}
+        error={errors[name]}
+      />
+    );
+  }
+
   renderInput(name, label, type = "text") {
     const { data, errors } = this.state;
+
     return (
       <Input
         type={type}
