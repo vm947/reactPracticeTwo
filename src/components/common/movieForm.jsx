@@ -32,17 +32,13 @@ class MovieForm extends Form {
       .label("Daily Rental Rate"),
   };
 
-  async componentDidMount() {
-    const { data: genres } = await getGenres();
-    this.setState({ genres });
-    //component loads and genres is populated into the state
-
-    const movieId = this.props.match.params.id;
-    if (movieId === "new") return;
-    //the params are checked. the /:id of the route. If route is new--empty page--then below is not executed
-    //if params is /:id then below is executed
-
+  async populateMovie() {
     try {
+      const movieId = this.props.match.params.id;
+      if (movieId === "new") return;
+      //the params are checked. the /:id of the route. If route is new--empty page--then below is not executed
+      //if params is /:id then below is executed
+
       const { data: movie } = await getMovie(movieId);
       this.setState({ data: this.mapToViewModel(movie) });
       //the grabbed object is then converted into an object with mapToViewModel THEN STORED IN THE STATE
@@ -55,6 +51,17 @@ class MovieForm extends Form {
     }
   }
 
+  async populateGenres() {
+    const { data: genres } = await getGenres();
+    this.setState({ genres });
+    //component loads and genres is populated into the state
+  }
+
+  async componentDidMount() {
+    await this.populateGenres();
+    await this.populateMovie();
+  }
+
   mapToViewModel(movie) {
     return {
       _id: movie._id,
@@ -65,8 +72,8 @@ class MovieForm extends Form {
     };
   }
 
-  doSubmit = () => {
-    saveMovie(this.state.data);
+  doSubmit = async () => {
+    await saveMovie(this.state.data);
 
     this.props.history.push("/movies");
   };

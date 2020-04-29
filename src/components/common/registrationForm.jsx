@@ -1,6 +1,14 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./form";
+import { toast } from "react-toastify";
+import * as userService from "../../services/userService";
+
+const options = {
+  autoClose: 6000,
+  type: toast.TYPE.INFO,
+  hideProgressBar: false,
+};
 
 class Registration extends Form {
   state = {
@@ -14,9 +22,17 @@ class Registration extends Form {
     name: Joi.string().required().label("Name"),
   };
 
-  doSubmit = () => {
-    //call the server
-    console.log("submitted");
+  doSubmit = async () => {
+    try {
+      await userService.register(this.state.data);
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        const errors = { ...this.state.errors };
+        errors.username = error.response.data;
+        this.setState({ errors });
+        toast.error("Username already used.");
+      }
+    }
   };
   render() {
     return (
