@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 
-const NavBar = (props) => {
+const NavBar = ({ user }) => {
   return (
     <nav className="nav nav-dark bg-dark mb-4">
       <Link
@@ -20,12 +20,26 @@ const NavBar = (props) => {
       <NavLink className="nav-link" to="/rentals">
         Rentals
       </NavLink>
-      <NavLink className="nav-link" to="/login">
-        Login
-      </NavLink>
-      <NavLink className="nav-link" to="/registration">
-        Registration
-      </NavLink>
+      {!user && (
+        <React.Fragment>
+          <NavLink className="nav-link" to="/login">
+            Login
+          </NavLink>
+          <NavLink className="nav-link" to="/registration">
+            Registration
+          </NavLink>
+        </React.Fragment>
+      )}
+      {user && (
+        <React.Fragment>
+          <NavLink className="nav-link" to="/profile">
+            {user.name}
+          </NavLink>
+          <NavLink className="nav-link" to="/logout">
+            Logout
+          </NavLink>
+        </React.Fragment>
+      )}
     </nav>
   );
 };
